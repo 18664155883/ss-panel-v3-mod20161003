@@ -176,6 +176,47 @@
 									
 								</div>
 							</div>
+						<div class="card">
+								<div class="card-main">
+									<div class="card-inner margin-bottom-no">
+										<p class="card-heading"><font color="red">流量抽奖大转盘</font></p>
+											<p>此游戏适合喜欢刺激的人玩，不能接受游戏规则、运气不佳、颜值低、心理承受能力差等用户请 <font color="red">自觉不要参与本游戏</font> ，否则你出现任何意外均与本站无关，这只是一个游戏，游戏重在娱乐！在此感谢 黑宝、Jason Lee、Jal 的技术支援。</p>																		
+											<p>刷新即可再次抽奖，抽奖在500~600这个范围随机抽取一个数字，每次抽奖消耗 500MB ~ 600MB 流量，游戏需要<font color="red">剩余流量大于 {$config['canyu']}GB 才能参与</font>，游戏不影响签到，<font color="red">参与游戏不算签到！</font></p>										
+											<p>游戏奖励如下：
+											<br>1、抽到 511 系统自动奖励 6G 流量；
+											<br>2、抽到 520 系统自动奖励 7G 流量；										
+											<br>3、抽到 521 系统自动奖励 6G 流量；
+											<br>4、抽到 555 系统自动奖励 8G 流量；
+											<br>5、抽到 566 系统自动奖励 6G 流量；
+											<br>6、抽到 588 系统自动奖励 6G 流量；
+											<br>7、抽到 599 系统自动奖励 9G 流量；
+											<br>8、抽到 600 系统自动奖励 10G 流量；
+											<br>9、抽到 518 系统自动奖励 6G 流量；
+											<br>10、抽到 514 系统自动扣除 5G 流量；</p>
+											<p id="loin-msg"></p>
+											
+											{if $geetest_html != null}
+												<div id="popup-captcha"></div>
+												{/if}
+										
+										
+							</div>
+						<div class="card-action">
+										<div class="card-action-btn pull-left">	
+										{if $user->isAbleToloin()}
+											     	<p id="loin-btn">
+													<button id="loin" class="btn btn-brand btn-flat waves-attach"><span class="icon">loin</span>&nbsp;点我抽奖</button>
+												</p>
+											{else}
+												<p><a class="btn btn-red disabled btn-flat waves-attach" href="#"><span class="icon">loin</span>&nbsp;您的剩余流量不足以参与抽奖</a></p>
+											{/if}
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						
+						
 						
 							<div class="card">
 								<div class="card-main">
@@ -313,6 +354,30 @@ window.onload = function() {
     })
 	
 </script>
+
+<script>
+    $(document).ready(function () {
+        $("#loin").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/user/loin",
+                dataType: "json",
+                success: function (data) {
+                    $("#loin-msg").html(data.msg);
+                    $("#loin-btn").hide();
+					$("#result").modal();
+                    $("#msg").html(data.msg);
+                },
+                error: function (jqXHR) {
+					$("#result").modal();
+                    $("#msg").html("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+	
+</script>
+
 {else}
 
 

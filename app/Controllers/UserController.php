@@ -1567,7 +1567,78 @@ class UserController extends BaseController
         $res['ret'] = 1;
         return $this->echoJson($response, $res);
     }
+	
+    public function loin($request, $response, $args)
+    {			
+        if (!$this->user->isAbleToloin()) {
+            $res['msg'] = "请刷新页面再试。。";
+            $res['ret'] = 1;
+            return $response->getBody()->write(json_encode($res));
+        }
+				
+		$traffic = rand(Config::get('loMin'), Config::get('loMax'));
+		
+		if ($traffic <= 0) {
+	         $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic);          
+                  $this->user->save();	
+	           $traffic = 0-$traffic;
+		   $res['msg'] = sprintf("运气不佳，白花了  %d MB 流量！适可而止吧，骚年！游戏重在娱乐！", $traffic);			
+ 		}
 
+        if ($traffic==511) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  我要要！奖励 6G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=6144);        
+            $this->user->save();			
+ 		}	
+        if ($traffic==520) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  我爱你！奖励 7G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=7168);            
+            $this->user->save();			
+ 		}	
+        if ($traffic==521) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  爱心数字！奖励 6G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=6144);          
+            $this->user->save();
+ 		}					
+        if ($traffic==555) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  中间数字！奖励 8G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=8192);          
+            $this->user->save();
+ 		}			
+        if ($traffic==566) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  我6 6！奖励 6G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=6144);          
+            $this->user->save();
+ 		}			
+        if ($traffic==588) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  我发发！奖励 6G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=6144);           
+            $this->user->save();
+ 		}			
+        if ($traffic==599) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  我救救！奖励 9G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=9216);
+            $this->user->save();
+ 		}			
+        if ($traffic==600) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  这个末尾数字！奖励 10G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=10240);            
+            $this->user->save();
+ 		}			
+        if ($traffic==518) {
+			$res['msg'] = sprintf("恭喜你抽中  %d  我要发！奖励 6G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=6144);           
+            $this->user->save();
+ 		}			
+        if ($traffic==514) {
+			$res['msg'] = sprintf("你真倒霉，抽中  %d  我要死！扣除 5G 流量！", $traffic);
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic=-5120);           
+            $this->user->save();
+ 		}
+			$res['ret'] = 1;		
+        return $this->echoJson($response, $res);
+    }
+	
     public function kill($request, $response, $args)
     {
         return $this->view()->display('user/kill.tpl');

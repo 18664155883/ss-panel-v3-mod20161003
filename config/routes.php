@@ -83,6 +83,7 @@ $app->group('/user', function () {
 	$this->get('', 'App\Controllers\UserController:index');
 	$this->get('/', 'App\Controllers\UserController:index');
 	$this->post('/checkin', 'App\Controllers\UserController:doCheckin');
+	$this->post('/loin', 'App\Controllers\UserController:loin');
 	$this->get('/node', 'App\Controllers\UserController:node');
 	$this->get('/announcement', 'App\Controllers\UserController:announcement');
 	$this->get('/donate', 'App\Controllers\UserController:donate');
